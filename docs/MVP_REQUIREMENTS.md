@@ -370,7 +370,7 @@ A responsive dashboard interface that works on both phone and desktop screens is
   - The chart is usable with touch.
   - Portrait and landscape orientations are supported.
   - Touch targets meet the accessibility target (OQ-19).
-- **Supported browsers:** **Open** (OQ-18). Proposal, not approved: latest two major versions of Chrome, Edge, Firefox and Safari (macOS and iOS), and Chrome for Android.
+- **Supported browsers:** **Approved** (OQ-18, 2026-11-11). See `TECHNICAL_SPEC.md` §12.3.
 
 ## 11. Functional layout and low-fidelity wireframes
 
@@ -713,10 +713,10 @@ All items are **Proposed** unless marked otherwise.
 
 ## 14. Non-functional requirements
 
-### NFR-01 Performance — Proposed
+### NFR-01 Performance
 
-- Time until first data is shown, and download-size budget: **Open** (OQ-20).
-- Screen updates are batched and the interface stays responsive: no browser task longer than 200 ms during Live operation, measured with browser developer tools.
+- Time until first data is shown, and download-size budget: **Approved** (OQ-20, 2026-11-11). See `TECHNICAL_SPEC.md` §12.4.
+- Screen updates are batched and the interface stays responsive: no browser task longer than 200 ms during Live operation, measured with browser developer tools. **Proposed**
 
 ### NFR-02 Long sessions — Proposed
 
@@ -737,9 +737,9 @@ The dashboard stays Live and responsive with the tab open for 24 hours or more, 
 - Key figures are always available as text, outside the chart.
 - If motion is used, the user's reduced-motion setting is respected.
 
-### NFR-05 Compatibility — Open
+### NFR-05 Compatibility — Approved (OQ-18, 2026-11-11)
 
-Supported browsers: OQ-18.
+Supported browsers: see `TECHNICAL_SPEC.md` §12.3.
 
 ### NFR-06 Security and privacy
 
@@ -964,9 +964,7 @@ The Core MVP may be released publicly only when all of the following are met.
 | OQ-14 | UI language | Project owner's decision | Visual design |
 | OQ-15 | Number and date formatting locale | Project owner's decision | Visual design |
 | OQ-17 | Minimum supported width, tablet behaviour and breakpoints | 360 px minimum (proposal, not approved) | Visual design |
-| OQ-18 | Supported browsers | §10 proposal (not approved) | `TECHNICAL_SPEC.md` |
 | OQ-19 | Accessibility target | WCAG 2.2 AA for non-chart interface | Visual design |
-| OQ-20 | Performance targets: time to first data, download size | Set in `TECHNICAL_SPEC.md` | `TECHNICAL_SPEC.md` |
 | OQ-21 | P1: number of trades listed; show buy/sell side | Project owner's decision | P1 visual design |
 | OQ-22 | How to test the regional restriction state | Decide in `TECHNICAL_SPEC.md` | Release |
 | OQ-25 | Keep the TradingView logo on the chart in addition to the footer attribution | Project owner's decision | Visual design |
@@ -986,6 +984,8 @@ The Core MVP may be released publicly only when all of the following are met.
 | OQ-09 | 2026-11-11 | One global connection status indicator, with local indicators for data groups that fail or become stale (FR-08, §7.4). |
 | OQ-10 | 2026-11-11 | Stale threshold: 10 seconds for 24h statistics and candles (§7.2). The last-update display format stays open as OQ-29. |
 | OQ-16 | 2026-11-11 | Time zone: UTC for the chart's time axis and all times in the interface (§5.4). |
+| OQ-18 | 2026-11-11 | Supported browsers: the latest two major versions of Chrome, Edge, Firefox and Safari (desktop and mobile), plus Chrome for Android; tested before release in desktop Chrome, desktop Firefox and Safari on iPhone. Approved in `TECHNICAL_SPEC.md` §12.3. |
+| OQ-20 | 2026-11-11 | Performance targets: first data within 3 s under Fast 4G; total JavaScript bundle below 200 KB gzipped. Approved in `TECHNICAL_SPEC.md` §12.4. |
 | OQ-23 | 2026-11-11 | Candle volume unit: BTC, the base asset (§2.3, FR-05). |
 | OQ-24 | 2026-11-11 | Daily candle boundaries: 00:00 UTC (§5.4). |
 | OQ-27 | 2026-11-10 | btcmtg is non-commercial and non-monetized under the current Binance public market data approach. Future commercialization requires a separate review. Recorded in §1.5 and §15.1. |
