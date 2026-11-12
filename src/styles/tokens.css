@@ -1,0 +1,116 @@
+/*
+ * Design tokens from the approved Instrument design (TD-11, TECHNICAL_SPEC §10.2).
+ *
+ * Every colour, radius, type size and spacing value lives here. Other style
+ * files use only var(--…), so they don't need to know which theme is active.
+ *
+ * Theme: follows the operating system's light/dark setting through
+ * prefers-color-scheme (D1). Nothing is stored in the browser (OQ-28).
+ *
+ * Text colours use the accessible variants (D5): each text colour reaches at
+ * least 4.5:1 against its panel (WCAG AA). Candle and LED colours are the
+ * design values: they are graphics, and direction is also shown by shape.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Typography ---- */
+  /* "btcmtg Inter" is registered from main.tsx before the app is shown.
+     "btcmtg Inter Fallback" is a metric-matched Arial, used only if Inter fails. */
+  --font-family: 'btcmtg Inter', 'btcmtg Inter Fallback', Arial, sans-serif;
+  --text-xs: 10px; /* labels, status, axes, footer (uppercase) */
+  --text-xs-line: 16px;
+  --text-sm: 13px; /* notices */
+  --text-sm-line: 18px;
+  --text-md: 18px; /* stat values, pair name, price change */
+  --text-md-line: 24px;
+  --text-xl: 40px; /* current price */
+  --text-xl-line: 48px;
+
+  /* ---- Geometry ---- */
+  --page-padding: 24px;
+  --panel-max-width: 1440px;
+  --radius-panel: 80px;
+  --radius-panel-medium: 40px;
+  --radius-button: 4px;
+  --radius-track: 5px;
+  --radius-notice: 20px;
+  --radius-pill: 9999px;
+  --chart-gap: 136px; /* reserved space above the chart; notices appear inside it */
+  --chart-gap-mobile: 112px;
+
+  /* ---- Surfaces and text (light) ---- */
+  --color-page: #ebebeb;
+  --color-panel: #dedede;
+  --color-text: rgba(0, 0, 0, 0.8);
+  --color-text-muted: #5f5e5e; /* 4.7:1 on the panel (Figma #868585 is 2.7:1) */
+  --color-up-text: #24693a; /* 4.9:1 */
+  --color-down-text: #ab3030; /* 4.9:1 */
+  --color-rule: rgba(0, 0, 0, 0.2);
+  --color-frame: rgba(0, 0, 0, 0.8);
+
+  /* ---- Chart (light) ---- */
+  --color-up: #6ab680;
+  --color-down: #e15555;
+  --color-band: rgba(247, 247, 247, 0.25);
+  --color-grid: rgba(178, 178, 178, 0.2);
+
+  /* ---- Controls (light) ---- */
+  --color-track: #747474;
+  --button-bg: linear-gradient(180deg, #f4f4f4, #fefefe);
+  --button-border: #ffffff;
+  --button-shadow: 0 0 0.225px rgba(0, 0, 0, 0.07), 0 0 0.225px rgba(0, 0, 0, 0.05),
+    0 2.698px 2.923px rgba(0, 0, 0, 0.25), 0 0.899px 3.598px rgba(0, 0, 0, 0.12);
+  --button-text: #5f5e5e;
+  --button-pressed-bg: linear-gradient(180deg, #cccccc, #f5f5f5);
+  --button-pressed-border: #e8e8e8;
+  --button-pressed-text: #3d3d3d;
+  --focus-ring: #f7530d;
+
+  /* ---- Last-price tag (light) ---- */
+  --tag-bg: #060612;
+  --tag-text: #ffffff;
+  --tag-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 27px 26px rgba(15, 15, 15, 0.34),
+    0 10px 10px rgba(15, 15, 15, 0.25);
+
+  /* ---- LEDs: flat colour with a subtle inner shadow ---- */
+  --led-green: #45c46a;
+  --led-amber: #f9b600;
+  --led-red: #e15555;
+  --led-off: #bdbdbd;
+  --led-shadow: inset 0 1px 1.5px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --color-page: #0e0e0f;
+    --color-panel: #1e1e20;
+    --color-text: rgba(255, 255, 255, 0.85);
+    --color-text-muted: #8e8d8d; /* 5.1:1 */
+    --color-up-text: #7cc892;
+    --color-down-text: #ee7272;
+    --color-rule: rgba(255, 255, 255, 0.18);
+    --color-frame: rgba(255, 255, 255, 0.6);
+
+    --color-band: rgba(255, 255, 255, 0.025);
+    --color-grid: rgba(255, 255, 255, 0.07);
+
+    --color-track: #0a0a0b;
+    --button-bg: linear-gradient(180deg, #3a3a3d, #2e2e31);
+    --button-border: #46464a;
+    --button-shadow: 0 2.7px 2.9px rgba(0, 0, 0, 0.5), 0 0.9px 3.6px rgba(0, 0, 0, 0.35);
+    --button-text: #9a9999;
+    --button-pressed-bg: linear-gradient(180deg, #141416, #26262a);
+    --button-pressed-border: #1b1b1e;
+    --button-pressed-text: #e2e2e2;
+
+    --tag-bg: #ececec;
+    --tag-text: #060612;
+    --tag-shadow: 0 4px 4px rgba(0, 0, 0, 0.5), 0 16px 16px rgba(0, 0, 0, 0.35);
+
+    --led-off: #4a4a4d;
+  }
+}

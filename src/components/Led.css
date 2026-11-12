@@ -1,0 +1,29 @@
+.led {
+  display: inline-block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: var(--led-shadow);
+}
+
+.led--small {
+  width: 5px;
+  height: 5px;
+}
+
+.led--green {
+  background: var(--led-green);
+}
+
+.led--amber {
+  background: var(--led-amber);
+}
+
+.led--red {
+  background: var(--led-red);
+}
+
+.led--off {
+  background: var(--led-off);
+}

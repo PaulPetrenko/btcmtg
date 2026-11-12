@@ -1,13 +1,42 @@
-/* Temporary neutral styles, not the final visual design. */
+/*
+ * Footer (Instrument design): a thin rule, then small uppercase lines.
+ * Phones: one line under the other. From 768 px: one row that wraps if needed.
+ * The disclaimer uses the main text colour; the attributions are muted.
+ */
 
 .footer {
-  margin-top: 2rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid;
-  font-size: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 40px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-rule);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-line);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
 }
 
 .footer__line {
-  margin: 0.25rem 0;
-  overflow-wrap: anywhere; /* the URL must not cause horizontal scrolling on narrow screens */
+  margin: 0;
+  overflow-wrap: anywhere; /* long lines wrap instead of causing horizontal scrolling */
+}
+
+.footer__line:first-child {
+  color: var(--color-text);
+}
+
+.footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px 40px;
+    margin-top: 52px;
+    padding-top: 16px;
+  }
 }

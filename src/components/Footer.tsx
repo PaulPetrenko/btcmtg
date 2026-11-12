@@ -22,7 +22,7 @@ export function Footer() {
       <p className="footer__line">
         TradingView Lightweight Charts™ Copyright (c) 2025 TradingView, Inc.{' '}
         <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">
-          https://www.tradingview.com/
+          tradingview.com
         </a>
       </p>
     </footer>

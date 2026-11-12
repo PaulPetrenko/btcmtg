@@ -1,0 +1,63 @@
+/*
+ * Status bar. Phones: a two-line block (connection, then chart context).
+ * From 768 px: one pill row with thin dividers (Frame 47).
+ */
+
+.status-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 7px 12px;
+  border: 1px solid var(--color-rule);
+  border-radius: 14px;
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-line);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-text-muted);
+}
+
+.status-bar__connection,
+.status-bar__context,
+.status-bar__part {
+  display: inline-flex;
+  align-items: center;
+}
+
+.status-bar__connection {
+  gap: 8px;
+}
+
+.status-bar__label {
+  color: var(--color-text);
+}
+
+/* Thin vertical divider before every context part except the first on phones. */
+.status-bar__part + .status-bar__part::before {
+  content: '';
+  width: 1px;
+  height: 12px;
+  margin: 0 10px;
+  background: var(--color-rule);
+}
+
+@media (min-width: 768px) {
+  .status-bar {
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    width: max-content;
+    height: 28px;
+    padding: 0 12px;
+    border-radius: var(--radius-pill);
+  }
+
+  /* In the single row, the context also gets a divider after the connection. */
+  .status-bar__context::before {
+    content: '';
+    width: 1px;
+    height: 12px;
+    margin: 0 10px;
+    background: var(--color-rule);
+  }
+}
