@@ -1,0 +1,13 @@
+/* Temporary neutral styles, not the final visual design. */
+
+.footer {
+  margin-top: 2rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid;
+  font-size: 0.75rem;
+}
+
+.footer__line {
+  margin: 0.25rem 0;
+  overflow-wrap: anywhere; /* the URL must not cause horizontal scrolling on narrow screens */
+}

@@ -1,0 +1,15 @@
+/* Temporary neutral styles, not the final visual design. */
+
+.timeframe-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.timeframe-selector__button {
+  font: inherit;
+}
+
+.timeframe-selector__button[aria-pressed='true'] {
+  font-weight: bold;
+}

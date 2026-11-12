@@ -1,0 +1,55 @@
+/*
+ * Temporary neutral styles for functional development and data checks.
+ * This is not the final visual design: the project owner designs the final UI,
+ * and these styles will be replaced (TECHNICAL_SPEC §10.2).
+ */
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.app__title {
+  font-size: 1.25rem;
+}
+
+.app__stats {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+}
+
+.app__stat {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.app__stat dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.app__message {
+  font-size: 0.875rem;
+}
+
+.app__status {
+  font-size: 0.875rem;
+}
+
+.app__notice {
+  padding: 0.5rem;
+  border: 1px solid;
+}
+
+.app__chart {
+  margin-top: 1.5rem;
+}

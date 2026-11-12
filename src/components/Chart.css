@@ -1,0 +1,5 @@
+/* Temporary neutral styles. The chart needs a container with a defined height (TECHNICAL_SPEC §10.1). */
+
+.chart {
+  height: 26rem;
+}
