@@ -1,0 +1,90 @@
+/* Price block (Frame 47: left column, 392 px on desktop). */
+
+.price-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.price-block p,
+.price-block h1 {
+  margin: 0;
+}
+
+.price-block__identity {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.price-block__pair {
+  font-size: var(--text-md);
+  line-height: var(--text-md-line);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.price-block__market {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-line);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.price-block__price {
+  font-size: var(--text-xl);
+  line-height: var(--text-xl-line);
+  white-space: nowrap;
+  color: var(--color-text);
+}
+
+.price-block__change {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--text-md);
+  line-height: var(--text-md-line);
+  white-space: nowrap;
+}
+
+.price-block__change-amount,
+.price-block__change-percent--flat {
+  color: var(--color-text-muted);
+}
+
+.price-block__change-percent--up {
+  color: var(--color-up-text);
+}
+
+.price-block__change-percent--down {
+  color: var(--color-down-text);
+}
+
+/* Stale: last known values stay visible, in grey (AC-09.4). */
+.price-block--stale .price-block__price {
+  color: var(--color-text-muted);
+}
+
+/* The stale mark is a small pill. It sits on the pair row on phones and at the
+   end of the change line from 768 px, so it never adds a line. */
+.price-block__stale .stale {
+  padding: 2px 8px;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-pill);
+}
+
+.price-block__stale--inline {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .price-block__stale--top {
+    display: none;
+  }
+
+  .price-block__stale--inline {
+    display: inline-flex;
+  }
+}

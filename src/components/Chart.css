@@ -1,0 +1,33 @@
+/*
+ * Chart container and chart geometry (Instrument design, Stage 4).
+ *
+ * The chart needs a container with a defined height (TECHNICAL_SPEC §10.1).
+ * The --chart-* values are read by chartTheme.ts (plain px numbers) and
+ * applied to the canvas; colours come from tokens.css.
+ */
+
+/* Phone (Mobile artboards): 230 px candles + 10 px gap + 60 px volume, plus the time axis. */
+.chart {
+  height: 328px;
+  --chart-axis-width: 86;
+  --chart-tag-connector: 8;
+  --chart-tag-frame-radius: 16;
+  --chart-tag-frame-padding: 3;
+  --chart-tag-padding-x: 8;
+  --chart-tag-padding-y: 6;
+  --chart-tag-min-width: 70;
+}
+
+/* From 768 px (Frame 47): 280 px candles + 9 px gap + 72 px volume, plus the time axis. */
+@media (min-width: 768px) {
+  .chart {
+    height: 390px;
+    --chart-axis-width: 164;
+    --chart-tag-connector: 57;
+    --chart-tag-frame-radius: 20;
+    --chart-tag-frame-padding: 4;
+    --chart-tag-padding-x: 13;
+    --chart-tag-padding-y: 8;
+    --chart-tag-min-width: 65;
+  }
+}

@@ -1,0 +1,42 @@
+/* 24h statistics: 2×2 on phones, four equal columns from 768 px. */
+
+.stats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+}
+
+.stats__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.stats__label {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-line);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-text-muted);
+}
+
+.stats__value {
+  margin: 0;
+  font-size: var(--text-md);
+  line-height: var(--text-md-line);
+  white-space: nowrap;
+  color: var(--color-text);
+}
+
+.stats--stale .stats__value {
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 768px) {
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+  }
+}

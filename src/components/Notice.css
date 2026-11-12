@@ -1,0 +1,43 @@
+/* Page notice: framed, with a status light. Section messages: light and text. */
+
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 10px 16px;
+  border: 1px solid var(--color-frame);
+  border-radius: var(--radius-notice);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line);
+}
+
+.notice .led,
+.notice-sections .led {
+  margin-top: 5px;
+}
+
+.notice-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line);
+}
+
+.notice-sections__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.notice-sections__name {
+  margin-right: 4px;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
