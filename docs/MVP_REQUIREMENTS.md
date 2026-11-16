@@ -2,10 +2,10 @@
 
 | | |
 |---|---|
-| **Status** | Approved v1.0 |
-| **Last updated** | 2026-11-11 |
-| **Sprint** | Sprint 1 (documentation only) |
-| **Scope source** | `docs/PROJECT_BRIEF.md` v0.3 |
+| **Status** | Approved v1.1 |
+| **Last updated** | 2026-11-16 |
+| **Stage** | Release preparation |
+| **Scope source** | `docs/PROJECT_BRIEF.md` Draft v0.4 |
 
 > **Educational purposes only. Not financial advice.**
 
@@ -170,13 +170,13 @@ Checked on 2026-11-10. Sources are listed in §20.
 
 - Shows 24h volume in both BTC (base asset) and USDT (quote asset). **Approved**
 - Each value is labelled with its unit. **Proposed**
-- Number format (full or abbreviated, number of decimals): **Open** (OQ-08).
+- Number format: **Approved** (OQ-08, 2026-11-12). BTC volume in full with 2 decimals ("17 405,41"); USDT volume in millions with 2 decimals and the suffix " M" ("1 283,38 M").
 
 ### 4.5 Rules common to FR-01 to FR-04
 
 - Labels make the 24h window clear. **Proposed**
 - Values are Binance's values, not recalculated (§2.3). **Proposed**
-- Number format and locale: **Open** (OQ-15).
+- Number format: **Approved** (OQ-15, 2026-11-12). Thousands are separated by a space, the decimal separator is a comma, and negative values use a true minus sign (−): "74 260,25", "−1 490,50".
 - Final labels and copy: approved by the project owner.
 
 ## 5. OHLCV chart and timeframe selection
@@ -234,7 +234,7 @@ btcmtg never fabricates candle data. It distinguishes three cases:
 - Times on the chart's time axis and elsewhere in the interface are shown in UTC. **Approved** (OQ-16, 2026-11-11)
 - The interface makes clear that displayed times are in UTC. **Approved** (2026-11-11). How this is presented is part of the visual design (project owner).
 - Daily (1d) candles start at 00:00 UTC, which is Binance's default. **Approved** (OQ-24, 2026-11-11)
-- Date and time formats: **Open** (OQ-15).
+- Date and time formats: **Approved** (OQ-15, 2026-11-12). Dates `YYYY-MM-DD`; times `HH:MM:SS` followed by "UTC" in the interface, and `HH:MM` on the chart's time axis.
 
 ## 6. Live data and connection states
 
@@ -287,7 +287,7 @@ Freshness is the time since the app last received an update for a data group.
 
 ### 7.3 Display — Proposed
 
-- The global indicator shows the time of the most recent update. Relative or absolute time: **Open** (OQ-29). An absolute time is shown in UTC (§5.4).
+- The global indicator shows the time of the most recent update. **Approved** (OQ-29, 2026-11-12): an absolute time in UTC (§5.4), for example "Updated 17:38:04 UTC".
 - Stale values stay visible and are clearly marked (W-03b). Stale data is never presented as live.
 - The stale mark disappears automatically when fresh data arrives.
 
@@ -326,7 +326,8 @@ Draft copy only states the intent of each message. Final wording is approved by 
 - Binance's spot API documentation does not describe responses for restricted locations. Community reports mention HTTP 451 from the main API host. Whether market-data-only hosts are restricted, and whether a browser can read such a response, is unverified (V-04).
 - E-01 is shown only when the app can positively identify a regional restriction. Otherwise E-03 is shown, which names regional restriction as a possible cause.
 - The app never suggests VPNs, proxies or other ways around restrictions.
-- How to test this state: **Open** (OQ-22).
+- How to test this state: **Approved** (OQ-22, 2026-11-16). For release, the E-01 and E-03 code paths are tested with the development simulations `?simulate=regional` and `?simulate=unavailable` and with request blocking in the browser's developer tools (`TECHNICAL_SPEC.md` §12.2). A test from a real restricted location is not required.
+- **Known limitation:** how Binance actually responds to a browser in a restricted location has not been verified (V-04). Users there may see E-03 rather than E-01.
 
 ### 8.4 Message copy — Proposed
 
@@ -348,21 +349,22 @@ A compact footer with the disclaimer and the required data and chart attribution
 | Disclaimer | **Approved** | "Educational purposes only. Not financial advice." |
 | TradingView attribution | **Approved** (licence requirement) | **Proposed:** the attribution notice from the NOTICE file of the adopted library version, currently "TradingView Lightweight Charts™ Copyright (c) 2025 TradingView, Inc.", with a link to https://www.tradingview.com/ |
 | Binance attribution | **Approved** | **Proposed:** "Market data: Binance" as plain text, with no Binance logo. Final wording: **Open** (OQ-26). |
-| Non-affiliation statement | **Open** (OQ-12) | **Proposed:** "Not affiliated with Binance or TradingView." |
+| Non-affiliation statement | **Approved** (OQ-12, 2026-11-16) | "Not affiliated with Binance or TradingView." |
 
 Rules — **Proposed**:
 
 - The footer is present at every supported width and in every state, including W-03c.
 - The footer stays secondary to market data in the information hierarchy.
-- The chart library can show a TradingView logo on the chart. This satisfies the licence's link requirement but not the notice text, so the footer notice is required either way (**Informative**). Whether to keep the on-chart logo: **Open** (OQ-25).
+- The chart library can show a TradingView logo on the chart. This satisfies the licence's link requirement but not the notice text, so the footer notice is required either way (**Informative**). Whether to keep the on-chart logo: **Open** (OQ-25). Interim decision (D3, 2026-11-12): the logo stays visible for now, to be revisited during the release review.
 - The licence and terms review (brief R4) must be complete before public release (§17).
 
 ## 10. Responsive UI requirements (FR-10)
 
 A responsive dashboard interface that works on both phone and desktop screens is required. **Approved**
 
-- **Layout classes in the wireframes:** Phone (W-02, W-05) and Desktop (W-01, W-04). Tablet behaviour and breakpoint values: **Open** (OQ-17).
-- **Minimum supported width:** **Open** (OQ-17). A 360 px proposal exists but is not approved.
+- **Layout classes in the wireframes:** Phone (W-02, W-05) and Desktop (W-01, W-04).
+- **Breakpoints and tablet behaviour:** **Approved** (OQ-17, 2026-11-12). Phone layout below 768 px; an intermediate layout from 768 px through 1439 px, which also covers tablets; the full desktop layout from 1440 px.
+- **Minimum supported width:** **Open** (OQ-17). A 360 px proposal exists but is not approved. The implementation was checked at 360 px and 390 px.
 - **Rules — Proposed:**
   - No horizontal page scrolling at any supported width.
   - All Core MVP information is reachable at every supported width.
@@ -695,7 +697,7 @@ All items are **Proposed** unless marked otherwise.
 
 - Trades are listed newest first and update live.
 - Each trade shows price (USDT), amount (BTC) and time.
-- Price uses FR-01 precision. Amount format follows OQ-08; the quantity step is 0.00001 BTC.
+- Price uses FR-01 precision. The quantity step is 0.00001 BTC. The amount format is set with the P1 visual design: OQ-08's resolution covers the 24h and chart volumes only.
 - The list has a fixed maximum length and stays readable when trades arrive fast. Updates may be batched, but trades are never reordered or altered.
 - Freshness follows the connection state (§7.2).
 - **States:**
@@ -718,9 +720,14 @@ All items are **Proposed** unless marked otherwise.
 - Time until first data is shown, and download-size budget: **Approved** (OQ-20, 2026-11-11). See `TECHNICAL_SPEC.md` §12.4.
 - Screen updates are batched and the interface stays responsive: no browser task longer than 200 ms during Live operation, measured with browser developer tools. **Proposed**
 
-### NFR-02 Long sessions — Proposed
+### NFR-02 Long sessions — Approved (2026-11-16)
 
 The dashboard stays Live and responsive with the tab open for 24 hours or more, including through Binance-initiated reconnections.
+
+- **Release gate — Approved (2026-11-16):** the 24-hour session test is mandatory before release (§17, item 9).
+- **Test conditions — Approved:** on the Cloudflare preview deployment, for at least 26 hours so that it covers Binance's 24-hour WebSocket connection lifetime, in desktop Chrome with the tab in the foreground, on a stable network, with the 1m timeframe selected. The procedure is in `TECHNICAL_SPEC.md` §12.5.
+- **What is checked:** reconnection, candle recovery, data freshness and interface responsiveness; heap size, DOM nodes and event listeners are monitored for sustained growth. No numeric memory limit is set.
+- **Status:** not yet performed.
 
 ### NFR-03 Data integrity
 
@@ -754,7 +761,8 @@ Supported browsers: see `TECHNICAL_SPEC.md` §12.3.
 ### NFR-07 Localization
 
 - Time zone: UTC (§5.4). **Approved** (OQ-16, 2026-11-11)
-- UI language, and number and date formats: **Open** (OQ-14, OQ-15).
+- UI language: **Open** (OQ-14).
+- Number and date formats: **Approved** (OQ-15, 2026-11-12), as described in §4.5 and §5.4.
 
 ### NFR-08 Rate limits — Proposed
 
@@ -784,7 +792,7 @@ Supported browsers: see `TECHNICAL_SPEC.md` §12.3.
 - Analytics or tracking
 - Trading pairs other than BTC/USDT and markets other than Binance Spot
 
-**Excluded from the current version of the project** (OQ-27, approved by the project owner on 2026-11-10; not yet in the brief; see §1.5):
+**Excluded from the current version of the project** (OQ-27, approved by the project owner on 2026-11-10; brief §5.3; see §1.5):
 
 - Advertising
 - Paid features
@@ -882,7 +890,7 @@ A criterion's status never changes the status of the requirements it checks. The
 - **AC-11.1** (**Proposed**) *Given* a throttled network on first load, *then* placeholders are shown, and zeros or invented values never appear.
 - **AC-11.2** (**Proposed**) *Given* the browser is offline at load, *then* the E-02 notice is shown. *When* the network returns, *then* data loads without a reload.
 - **AC-11.3** (**Proposed**) *Given* all Binance hosts are blocked at load, *then* the E-03 notice is shown, naming regional restriction as a possible cause, and no workaround is suggested.
-- **AC-11.4** (**Proposed**) *Given* access from a restricted location (method: OQ-22), *then* E-01 is shown if the restriction can be identified, otherwise E-03 (§8.3).
+- **AC-11.4** (**Proposed**) *Given* a regional restriction, *then* E-01 is shown if the restriction can be identified, otherwise E-03 (§8.3). Test method (**Approved**, OQ-22, 2026-11-16): `?simulate=regional` (a readable HTTP 451) shows E-01; `?simulate=unavailable` and request blocking in developer tools (no readable response) show E-03. Behaviour from a real restricted location is not verified (V-04).
 - **AC-11.5** (**Approved**) *Given* only candle-history requests are blocked, *then* a local indicator in the chart area shows that chart data could not be loaded, while price and 24h statistics keep updating (§7.4, W-03d).
 - **AC-11.6** (**Proposed**) *When* blocked requests are unblocked, *then* the affected area recovers automatically, or by the retry control if OQ-11 is approved.
 - **AC-11.7** (**Proposed**) E-04 (rate limiting) shows its message and recovers after the wait Binance specifies. Verification method: **Open**, because this can't be triggered safely against Binance; to be defined in `TECHNICAL_SPEC.md`.
@@ -920,17 +928,21 @@ The Core MVP may be released publicly only when all of the following are met.
 
 **Mandatory — Approved:**
 
-1. The project owner has reviewed and explicitly approved the final visual design.
-2. The implementation has been verified against the approved visual design.
+1. The project owner has reviewed and explicitly approved the final visual design. **Met** (2026-11-12): the Instrument design, based on Frame 47, was approved and the design phase closed.
+2. The implementation has been verified against the approved visual design. **Met** (2026-11-12): implementation Stages 1–5 were verified and accepted by the project owner, and merged into `main` through pull request #1.
 
 **Proposed:**
 
-3. All Approved Core MVP acceptance criteria (FR-01 to FR-12 and the NFRs, §16) pass on the production Cloudflare Pages deployment in the supported browsers.
-4. The licence and terms review (brief R4) is complete, including V-01 to V-03, and the footer attributions match its outcome.
-5. No out-of-scope functionality is present (§15.1, plus §15.2 once approved).
-6. Every open question marked as needed for release is resolved.
-7. The documentation is updated: brief, this document, `TECHNICAL_SPEC.md` and `README.md`.
-8. The project owner signs off on the release.
+3. All Approved Core MVP acceptance criteria (FR-01 to FR-12 and the NFRs, §16) pass on the production Cloudflare Pages deployment in the supported browsers. **Not met** (2026-11-16): there is no deployment yet. Checks so far ran on local builds in desktop Chrome, Edge and Firefox. Remaining: all criteria on the deployment, including the Safari on iPhone test (setup in `TECHNICAL_SPEC.md` §12.3, not yet performed).
+4. The licence and terms review (brief R4) is complete, including V-01 to V-03, and the footer attributions match its outcome. **Not met** (2026-11-16). Done: the third-party copyright notices and licence texts are published at `/licenses.txt`, and the TradingView footer notice matches the library's NOTICE file. Remaining: V-01, V-02 and V-03; OQ-26 (Binance attribution wording); OQ-25 (on-chart logo).
+5. No out-of-scope functionality is present (§15.1, plus §15.2 once approved). **Met** (checked 2026-11-16 against `main` at `3f781f8` plus the release-preparation changes): none of the §15.1 exclusions is present, and none of the §15.2 items either. The only controls are the six timeframe buttons and the footer link; the only network requests go to the site itself and Binance's two public market data hosts. To be checked again if the code changes before release.
+6. Every open question marked as needed for release is resolved. **Not met** (2026-11-16): OQ-26 is needed before release, and OQ-25 before the release review (§19.1). OQ-22 was resolved on 2026-11-16.
+7. The documentation is updated: brief, this document, `TECHNICAL_SPEC.md` and `README.md`. **Not met** (2026-11-16). Done: this document and `TECHNICAL_SPEC.md` (v1.1), and `README.md`. Remaining: the brief was brought up to date on 2026-11-16 but is still a draft awaiting the project owner's approval (Draft v0.4); the documents also need updating with the outcome of the terms review, the deployment and the remaining tests.
+8. The project owner signs off on the release. **Not met**: pending.
+
+**Mandatory — Approved (2026-11-16):**
+
+9. The 24-hour session test (NFR-02) passes on the Cloudflare preview deployment, following `TECHNICAL_SPEC.md` §12.5. **Not met**: not yet performed.
 
 **Approved:** P1 is not required. The Core MVP can be released without the recent trades feed.
 
@@ -957,20 +969,15 @@ The Core MVP may be released publicly only when all of the following are met.
 |---|---|---|---|
 | OQ-03 | How will the approved visual design be referenced from the repository? | Project owner's decision | UI implementation |
 | OQ-06 | Chart interactions: crosshair, hovered-candle readout, pan, zoom, reset | Project owner's decision | Visual design |
-| OQ-08 | Volume and amount format: full or abbreviated, number of decimals | Project owner's decision | Visual design |
 | OQ-11 | Visible retry control in error states, or automatic recovery only | Project owner's decision | Visual design |
-| OQ-12 | Add "Not affiliated with Binance or TradingView" to the footer | Include, consistent with Binance's no-implied-endorsement terms | Release |
 | OQ-13 | Show the product name in the interface | Project owner's decision | Visual design |
 | OQ-14 | UI language | Project owner's decision | Visual design |
-| OQ-15 | Number and date formatting locale | Project owner's decision | Visual design |
-| OQ-17 | Minimum supported width, tablet behaviour and breakpoints | 360 px minimum (proposal, not approved) | Visual design |
+| OQ-17 | Minimum supported width. Breakpoints and tablet behaviour were approved on 2026-11-12 (§10). | 360 px minimum (proposal, not approved) | Visual design |
 | OQ-19 | Accessibility target | WCAG 2.2 AA for non-chart interface | Visual design |
 | OQ-21 | P1: number of trades listed; show buy/sell side | Project owner's decision | P1 visual design |
-| OQ-22 | How to test the regional restriction state | Decide in `TECHNICAL_SPEC.md` | Release |
-| OQ-25 | Keep the TradingView logo on the chart in addition to the footer attribution | Project owner's decision | Visual design |
+| OQ-25 | Keep the TradingView logo on the chart in addition to the footer attribution | Interim decision D3 (2026-11-12): keep it visible for now and revisit during the release review | Release review |
 | OQ-26 | Final Binance attribution wording, including whether to name "Binance Vision" | "Market data: Binance", final after the terms review | Release |
 | OQ-28 | Privacy constraints: no cookies, no browser storage, no personal data | Adopt all three | Implementation |
-| OQ-29 | Last-update time format: relative (for example "12 s ago") or absolute. Split from OQ-10. | Project owner's decision | Visual design |
 
 ### 19.2 Resolved during drafting
 
@@ -981,14 +988,19 @@ The Core MVP may be released publicly only when all of the following are met.
 | OQ-04 | 2026-11-10 | Read-only research was approved and completed (§2.4, §20). |
 | OQ-05 | 2026-11-11 | Default timeframe on load: 1h (FR-06). |
 | OQ-07 | 2026-11-11 | Initial candle history: the 500 most recent candles for the selected timeframe (FR-05). |
+| OQ-08 | 2026-11-12 | Volume format: BTC volume in full with 2 decimals; USDT volume in millions with 2 decimals and " M" (FR-04). Approved with the Instrument formatting conventions (Stage 2). P1 trade amounts are not covered (§13). |
 | OQ-09 | 2026-11-11 | One global connection status indicator, with local indicators for data groups that fail or become stale (FR-08, §7.4). |
-| OQ-10 | 2026-11-11 | Stale threshold: 10 seconds for 24h statistics and candles (§7.2). The last-update display format stays open as OQ-29. |
+| OQ-10 | 2026-11-11 | Stale threshold: 10 seconds for 24h statistics and candles (§7.2). The last-update display format was split off as OQ-29 (resolved 2026-11-12). |
+| OQ-12 | 2026-11-16 | The footer includes "Not affiliated with Binance or TradingView." (§9). |
+| OQ-15 | 2026-11-12 | Number and date formats: space-separated thousands, comma decimal separator, true minus sign, dates `YYYY-MM-DD`, times `HH:MM:SS` UTC (§4.5, §5.4). Approved with the Instrument design and implemented in Stage 2. UI language stays open as OQ-14. |
 | OQ-16 | 2026-11-11 | Time zone: UTC for the chart's time axis and all times in the interface (§5.4). |
 | OQ-18 | 2026-11-11 | Supported browsers: the latest two major versions of Chrome, Edge, Firefox and Safari (desktop and mobile), plus Chrome for Android; tested before release in desktop Chrome, desktop Firefox and Safari on iPhone. Approved in `TECHNICAL_SPEC.md` §12.3. |
 | OQ-20 | 2026-11-11 | Performance targets: first data within 3 s under Fast 4G; total JavaScript bundle below 200 KB gzipped. Approved in `TECHNICAL_SPEC.md` §12.4. |
+| OQ-22 | 2026-11-16 | Regional restriction testing: the development simulations `?simulate=regional` and `?simulate=unavailable`, plus request blocking in developer tools, are sufficient for release. No test from a real restricted location is required. Real behaviour there stays unverified and is documented as a known limitation (§8.3, V-04). |
 | OQ-23 | 2026-11-11 | Candle volume unit: BTC, the base asset (§2.3, FR-05). |
 | OQ-24 | 2026-11-11 | Daily candle boundaries: 00:00 UTC (§5.4). |
 | OQ-27 | 2026-11-10 | btcmtg is non-commercial and non-monetized under the current Binance public market data approach. Future commercialization requires a separate review. Recorded in §1.5 and §15.1. |
+| OQ-29 | 2026-11-12 | Last-update time: absolute, in UTC, for example "Updated 17:38:04 UTC" (§7.3). Approved with the Stage 3 status bar. |
 
 ### 19.3 Deferred decisions
 
@@ -1009,7 +1021,7 @@ The Core MVP may be released publicly only when all of the following are met.
 | V-01 | Binance Terms of Use: automated retrieval failed; review manually. | Release |
 | V-02 | Binance list of prohibited countries: automated retrieval failed (HTTP 503); review manually. | Release |
 | V-03 | Whether the Binance Vision Dataset Terms apply to the market-data-only API hosts. | Host decision in `TECHNICAL_SPEC.md` |
-| V-04 | Behaviour from restricted locations: status codes, and whether a browser can read them. | Release (OQ-22) |
+| V-04 | Behaviour from restricted locations: status codes, and whether a browser can read them. | Not required for release (OQ-22, 2026-11-16). Remains unverified; documented as a known limitation (§8.3). |
 | V-05 | Cross-origin behaviour in a real browser. Command-line tests were run on 2026-11-10; real-browser verification is still outstanding. | Finalizing the technical approach in `TECHNICAL_SPEC.md` |
 
 ## 20. Sources
@@ -1048,3 +1060,4 @@ Community sources (not authoritative):
 |---|---|---|
 | 0.1 | 2026-11-10 | First draft for review. |
 | 1.0 | 2026-11-11 | Approved by the project owner. §5.3 approved; UTC must be made clear in the interface (§5.4); OQ-28 is now needed before implementation; meaning of Approved acceptance criteria clarified (§16). |
+| 1.1 | 2026-11-16 | Synchronized with decisions made during design and implementation. Resolved OQ-08, OQ-12, OQ-15 and OQ-29. OQ-17: breakpoints and tablet behaviour approved, minimum width still open. OQ-25: interim decision D3 recorded, still open. §17 items 1 and 2 marked as met. §17 items 3–8 given their current status: item 5 met, the others not yet met. Resolved OQ-22 (test method, with real-location behaviour documented as a known limitation); AC-11.4 and V-04 updated. NFR-02 approved, with the 24-hour session test as mandatory release item 9 (not yet performed). |
