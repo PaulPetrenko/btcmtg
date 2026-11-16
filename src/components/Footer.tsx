@@ -10,7 +10,7 @@ import './Footer.css'
  *   requirement, AC-12.2). The NOTICE file writes "(с)" with a Cyrillic "с";
  *   the Latin "(c)" from MVP §9 is used here.
  * - Binance: proposed wording "Market data: Binance". Final wording is OQ-26.
- * - A non-affiliation statement is not shown: OQ-12 is open.
+ * - Non-affiliation: approved wording (OQ-12, 2026-11-16).
  *
  * Links open in a new tab (IR-05).
  */
@@ -25,6 +25,7 @@ export function Footer() {
           tradingview.com
         </a>
       </p>
+      <p className="footer__line">Not affiliated with Binance or TradingView.</p>
     </footer>
   )
 }

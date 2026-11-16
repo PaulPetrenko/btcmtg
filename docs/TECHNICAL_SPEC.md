@@ -2,10 +2,10 @@
 
 | | |
 |---|---|
-| **Status** | Approved v1.0 |
-| **Last updated** | 2026-11-11 |
-| **Sprint** | Sprint 1 (documentation only) |
-| **Sources of truth** | `docs/PROJECT_BRIEF.md` v0.3, `docs/MVP_REQUIREMENTS.md` v1.0 |
+| **Status** | Approved v1.1 |
+| **Last updated** | 2026-11-16 |
+| **Stage** | Release preparation |
+| **Sources of truth** | `docs/PROJECT_BRIEF.md` Draft v0.4, `docs/MVP_REQUIREMENTS.md` v1.1 |
 
 ## How to read this document
 
@@ -91,7 +91,7 @@ The version numbers were checked on the npm registry on 2026-11-11 (**Informativ
 
 | Item | Version | Approved by | Notes |
 |---|---|---|---|
-| Node.js | 26 LTS | TD-01 | Current Active LTS, already installed on the development machine. Vite 8 needs Node 20.19+ or 22.12+ (**Informative**). Pinned with a `.node-version` file, which Cloudflare Pages also reads. |
+| Node.js | 26 LTS | TD-01 | Current Active LTS, already installed on the development machine. Vite 8 needs Node 20.19+ or 22.12+ (**Informative**). Pinned with a `.node-version` file, which Cloudflare Pages also reads. Development machine: Node.js 26.13.0 with npm 11.20.0, the only Node installation there; all local lint and build checks ran under it. The 26.x version Cloudflare's build image provides is confirmed on the first preview build (§14.4). |
 | npm | 11.x (bundled with Node) | TD-01 | `package-lock.json` is committed. |
 | React, React DOM | 19.3 | TD-02 | From the Vite template. |
 | Vite, @vitejs/plugin-react | 8.3, 6.x | TD-02 | From the Vite template. |
@@ -265,7 +265,7 @@ interface MarketSnapshot {
 
 - **Marking stale:** each group records when its data last arrived. A one-second timer marks DG-1 and DG-2 stale after 10 seconds without an update, as approved in MVP §7.2, and clears the mark when data arrives.
 - **Same thresholds in every state:** Reconnecting and Offline don't mark data stale any earlier.
-- **Last update:** the global "last update" time is the more recent of the two groups' times. Its display format is OQ-29.
+- **Last update:** the global "last update" time is the more recent of the two groups' times. It is shown as an absolute UTC time (OQ-29, approved 2026-11-12).
 
 ### 8.3 Reconnection
 
@@ -295,7 +295,7 @@ DG-1 has two sources: the REST request at load and the ticker stream. It only co
 
 - **When E-01 appears:** only for a readable HTTP 451 from REST.
 - **Why that's rare:** error responses may lack the headers browsers need to read them, and a failed WebSocket connection never exposes a status code.
-- **What users usually see:** a restriction will usually appear as E-03, which already names regional restriction as a possible cause. Real behaviour from a restricted location remains unknown (V-04).
+- **What users usually see:** a restriction will usually appear as E-03, which already names regional restriction as a possible cause. Real behaviour from a restricted location remains unknown (V-04); this is a known limitation of the release (OQ-22).
 - **No workaround:** the app never switches to another host to get around a block.
 
 ## 9. Chart integration — Approved (TD-10)
@@ -309,7 +309,7 @@ DG-1 has two sources: the REST request at load and the ticker stream. It only co
 - **Updates:** `setData` for a full load and `update` for live candles (§6.2). `update` only accepts the last candle or a newer one, which matches §6.2.
 - **Size:** `autoSize: true`, so the chart follows the size of its container (§10).
 - **Interactions:** the library's defaults (crosshair, scrolling, zooming) stay until OQ-06 is decided. Each can be switched off with an option.
-- **Attribution:** the footer shows the text from the library's `NOTICE` file and a link to tradingview.com (FR-12, AC-12.2). Whether to keep the on-chart logo (`layout.attributionLogo`) is OQ-25.
+- **Attribution:** the footer shows the text from the library's `NOTICE` file and a link to tradingview.com (FR-12, AC-12.2). Whether to keep the on-chart logo (`layout.attributionLogo`) is OQ-25. Until then, the library default applies and the logo is visible (interim decision D3, 2026-11-12).
 
 ## 10. Responsive layout, styling and formatting
 
@@ -317,7 +317,7 @@ DG-1 has two sources: the REST request at load and the ticker stream. It only co
 
 These keep the status they have in the MVP requirements.
 
-- **Layouts:** phone and desktop (FR-10, Approved). Breakpoints and the minimum width come from the visual design (OQ-17).
+- **Layouts:** phone and desktop (FR-10, Approved). Breakpoints (OQ-17, approved 2026-11-12): phone below 768 px, intermediate from 768 px through 1439 px, desktop from 1440 px. The minimum supported width is still open (OQ-17).
 - **Behaviour:** no horizontal page scrolling, a chart usable by touch, and both portrait and landscape (MVP §10, Proposed).
 - **Chart height:** the chart needs a container with a defined height. The visual design sets it for each layout.
 - **Accessibility (NFR-04, IR-06, Proposed):**
@@ -336,10 +336,10 @@ These keep the status they have in the MVP requirements.
 
 ### 10.3 Formatting
 
-- `src/format.ts` uses the browser's built-in `Intl.NumberFormat` and `Intl.DateTimeFormat`, so no formatting library is added (§3.3).
-- Times use `timeZone: 'UTC'` (MVP §5.4, Approved).
+- `src/format.ts` uses the browser's built-in `Intl.NumberFormat` for rounding, so no formatting library is added (§3.3). Dates and times are built from the UTC fields of `Date`.
+- Times are in UTC (MVP §5.4, Approved).
 - Price and 24h change use 2 decimal places (FR-01 and FR-02, Proposed in the MVP).
-- Volume format follows OQ-08, and the locale follows OQ-15. Each is one setting in `format.ts`.
+- Number and date formats follow OQ-15 and volume formats follow OQ-08, both approved on 2026-11-12 (MVP §4.5, §5.4, FR-04). The page and the chart use the same functions.
 
 ## 11. Deployment: Cloudflare Pages from GitHub — Approved (TD-12)
 
@@ -377,18 +377,76 @@ These keep the status they have in the MVP requirements.
   - the Network tab for AC-N6.1 (requests go only to Binance and the site's own origin) and AC-N8.1 (the used-weight header)
 - **E-01 and E-04:** these can't be triggered safely against Binance. A development-only URL switch forces those code paths: `?simulate=regional`, `?simulate=rate-limit` or `?simulate=unavailable`. It exists only in `npm run dev` builds and is removed from production builds.
   - This is the verification method for AC-11.7.
-  - It is also how the E-01 and E-03 code paths are tested. OQ-22 itself stays Open in the MVP requirements, because real behaviour from a restricted location can't be verified (V-04).
+  - It is also how the E-01 and E-03 code paths are tested. **Release test method — Approved (OQ-22, 2026-11-16):** `?simulate=regional` (E-01), `?simulate=unavailable` and DevTools request blocking (E-03) are sufficient for release (AC-11.4). A test from a real restricted location is not required.
+  - **Known limitation:** real behaviour from a restricted location is not verified (V-04, §8.5).
 
 ### 12.3 Supported browsers — Approved (OQ-18, 2026-11-11)
 
 - **Supported:** the latest two major versions of Chrome, Edge, Firefox and Safari (desktop and mobile), plus Chrome for Android. Vite's default build target covers these.
 - **Tested before release:** Chrome on desktop, Firefox on desktop and Safari on an iPhone.
+- **Safari on iPhone test setup — Approved (2026-11-16).** Status: not yet performed.
+  - Device: iPhone 15 Pro, with Safari on the latest iOS version installed on the device at test time. The previous major iOS version is not tested.
+  - Site: the HTTPS Cloudflare preview deployment.
+  - Orientations: portrait (phone layout) and landscape (the iPhone 15 Pro's landscape width is in the intermediate layout, 768–1439 px).
+  - Checks:
+    - font loading: the page appears in Inter, with no change of font afterwards
+    - price and chart updates
+    - all six timeframe controls, by touch
+    - touch interactions with the chart, with page scrolling still working
+    - light and dark mode, following the iOS setting
+    - offline recovery: Airplane Mode on, then off
+    - background return: lock the phone or switch apps for 2 minutes or more, then return
+    - rotation
+    - the footer link
+    - `/licenses.txt`: the characters "™" and "(с)" display correctly
 
 ### 12.4 Performance targets — Approved (OQ-20, 2026-11-11)
 
 - **First data:** the price appears within 3 seconds of opening the page, measured on a cold load with Chrome DevTools "Fast 4G" throttling.
 - **JavaScript size:** the total JavaScript bundle is below 200 KB gzipped. `vite build` prints the sizes.
 - **Unchanged checks:** NFR-01's 200 ms long-task limit and NFR-02's 24-hour session check stay as defined in the MVP requirements.
+
+### 12.5 24-hour session test (NFR-02) — Approved (2026-11-16)
+
+A mandatory release gate (MVP §17, item 9). Status: not yet performed.
+
+**Environment**
+
+- The Cloudflare preview deployment (a production build).
+- Latest desktop Chrome, a fresh profile without extensions, one tab in the foreground.
+- Computer and display sleep turned off; a stable network.
+- The 1m timeframe selected.
+- At least 26 hours, so that the run includes Binance closing the WebSocket connection after 24 hours.
+
+**Checkpoints:** at the start, then after 10 minutes, 1, 4, 12, 24 and 26 hours. DevTools stays closed between checkpoints, because it keeps every WebSocket message in memory. At each checkpoint, record:
+
+1. The status bar: "Live" and the "Updated … UTC" time; and the price compared with Binance (for example `https://data-api.binance.vision/api/v3/ticker/price?symbol=BTCUSDT`).
+2. In Chrome's Task Manager: the tab's memory footprint and JavaScript memory.
+3. In DevTools Performance monitor: JS heap size, DOM nodes and JS event listeners. In Network, WS filter: the number of open connections.
+4. At 24 and 26 hours only: the heap after "Collect garbage" (Memory panel), and a 5-minute Performance recording.
+
+**Expected behaviour**
+
+- Exactly one WebSocket connection at any time, receiving messages about every second.
+- When Binance closes the connection at about 24 hours: a brief Reconnecting state, a new connection, one `klines` request that reloads the candles, then Live again (MVP §6).
+- No other REST requests after the first load, except a `klines` reload after a reconnection or a detected gap.
+
+**What is checked**
+
+- **Reconnection:** any Reconnecting, Unavailable or Offline state is recorded with its time and duration.
+- **Candle recovery:** after the reconnection, no candles are missing or duplicated around that time, and the last candle matches Binance.
+- **Data freshness:** a stale mark appears only after a real 10-second gap and clears with the next update.
+- **Responsiveness:** the interface responds normally.
+- **Resources:** heap size (after garbage collection), DOM nodes and event listeners are compared across checkpoints to find sustained growth. More than one simultaneous WebSocket connection is a failure. No numeric memory limit is set; a slow increase from storing about 1,440 one-minute candles a day is expected.
+
+**Pass criteria:** the existing acceptance criteria:
+
+- AC-N2.1: Live at 24 and 26 hours, values match Binance, and the interface is responsive.
+- AC-07.2: the last-update indicator advances at least every 2 seconds.
+- MVP §6: at most a brief Reconnecting state through Binance's close; no error.
+- AC-09.2 and AC-09.3: stale marks only after 10 seconds without an update; they clear when updates resume.
+- AC-N1.2: no task longer than 200 ms in the final 5-minute recording.
+- AC-08.5: one connection status indicator throughout.
 
 ## 13. Verification status
 
@@ -397,7 +455,7 @@ These keep the status they have in the MVP requirements.
 | V-05 | Cross-origin access from a real browser | **Verified in Google Chrome on 2026-11-11** (details below). Other browsers are checked under AC-N5.1. |
 | V-03 | Whether the Binance Vision terms apply to the market-data-only hosts | Unresolved, not blocking. btcmtg is non-commercial (MVP §1.5), and the attribution wording follows OQ-26 before release. |
 | V-01, V-02 | Binance Terms of Use; list of prohibited countries | Manual review before release (MVP §19.4). |
-| V-04 | Behaviour from restricted locations | Unknown; handled as described in §8.5. |
+| V-04 | Behaviour from restricted locations | Unknown; handled as described in §8.5. Not required for release (OQ-22, 2026-11-16); documented as a known limitation. |
 
 V-05 results. The test ran in Chrome from an `about:blank` page, so every request was cross-origin.
 
@@ -439,7 +497,7 @@ V-05 results. The test ran in Chrome from an `about:blank` page, so every reques
 |---|---|---|---|
 | OQ-18 | **Approved** 2026-11-11 | Latest two major versions of Chrome, Edge, Firefox and Safari (desktop and mobile), plus Chrome for Android. Tested before release in desktop Chrome, desktop Firefox and Safari on iPhone. | §12.3 |
 | OQ-20 | **Approved** 2026-11-11 | First data within 3 s under Fast 4G; total JavaScript bundle below 200 KB gzipped. | §12.4 |
-| OQ-22 | **Open** | TD-13's simulation is the approved way to test the E-01 and E-03 code paths. Real behaviour from a restricted location stays unverified (V-04). | §12.2 |
+| OQ-22 | **Approved** 2026-11-16 | TD-13's simulation, plus DevTools request blocking, is the release test method for the E-01 and E-03 code paths. Real behaviour from a restricted location stays unverified (V-04) and is a known limitation. | §12.2 |
 
 MVP §19.2 also records OQ-18 and OQ-20 as resolved, with a reference to this document.
 
@@ -452,7 +510,9 @@ This document also settles three items the MVP requirements left to it:
 
 These questions are owned by the visual design or the MVP requirements. This document only notes where each one plugs in:
 
-OQ-03, OQ-06, OQ-08, OQ-11, OQ-12, OQ-13, OQ-14, OQ-15, OQ-17, OQ-19, OQ-21, OQ-22, OQ-25, OQ-26, OQ-28 (browser storage, §7), OQ-29.
+OQ-03, OQ-06, OQ-11, OQ-13, OQ-14, OQ-17 (minimum width only), OQ-19, OQ-21, OQ-25, OQ-26, OQ-28 (browser storage, §7).
+
+OQ-08, OQ-12, OQ-15, OQ-22 and OQ-29 were resolved in MVP v1.1 (2026-11-16).
 
 ### 14.4 Deferred to implementation
 
@@ -468,3 +528,4 @@ OQ-03, OQ-06, OQ-08, OQ-11, OQ-12, OQ-13, OQ-14, OQ-15, OQ-17, OQ-19, OQ-21, OQ-
 |---|---|---|
 | 0.1 | 2026-11-11 | First draft for review. |
 | 1.0 | 2026-11-11 | TD-01 to TD-03 and TD-05 to TD-13 approved; TD-04 (Vitest) declined. OQ-18 and OQ-20 approved. Lightweight Charts 5.3 labelled as approved through TD-10. Timeframe switches limited to one per second, latest selection only. Timeframe storage kept Proposed while OQ-28 is open. |
+| 1.1 | 2026-11-16 | Synchronized with MVP v1.1: OQ-08, OQ-15 and OQ-29 outcomes (§8.2, §10.3); approved breakpoints (§10.1); interim decision D3 for the on-chart logo (§9); OQ-08, OQ-12, OQ-15 and OQ-29 removed from §14.3. §10.3 now describes how `format.ts` actually builds dates and times. OQ-22 resolved (§12.2, §13, §14.2). Safari on iPhone test setup (§12.3) and the 24-hour session test procedure (§12.5) added; neither has been performed. Development machine's Node and npm versions recorded (§3.1). |
